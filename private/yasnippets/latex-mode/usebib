@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# key: usebib
+# name: usebib
+# --
+\usepackage[
+backend=biber,
+bibencoding=utf8,
+sorting=anyt,
+style=alphabetic
+]{biblatex}
+\addbibresource{${1:references.bib}}
+$0

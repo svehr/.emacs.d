@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: math_displaymath
+# key: md
+# --
+\[
+  $1
+\]
+$0

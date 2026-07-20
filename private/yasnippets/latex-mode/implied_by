@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: implied_by
+# key: ib
+# --
+\impliedby$0

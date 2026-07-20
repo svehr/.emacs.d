@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# key: ch_
+# name: chapter_
+# type: snippet
+# --
+\chapter{$1}
+
+$0

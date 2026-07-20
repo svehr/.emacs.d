@@ -1,0 +1,38 @@
+# -*- mode: snippet -*-
+# key: template
+# name: template
+# --
+\documentclass[a4paper,12pt]{${1:$$(yas/choose-value '("article" "report" "book" "letter"))}}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[${2:$$(yas/choose-value '("british" "ngerman"))}]{babel}
+
+\usepackage{mypackages}
+
+
+\author{$3}
+\date{last compilation: \today}
+
+\title{$4}
+
+
+
+\begin{document}
+
+\abovedisplayskip=4pt
+\belowdisplayskip=4pt
+\abovedisplayshortskip=2pt
+\belowdisplayshortskip=2pt
+
+
+\maketitle
+
+
+\tableofcontents
+
+
+$0
+
+
+
+\end{document}

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: in
+# key: in
+# --
+#include <${1:header}>$0

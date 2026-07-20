@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: figure
+# key: fig
+# --
+\begin{figure}[ht]
+  \centering
+  \includegraphics[${1:OPTIONS}]{figures/${2:FILE}}
+  \caption{\label{fig:${3:LABEL}} $0}
+\end{figure}

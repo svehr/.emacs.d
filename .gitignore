@@ -1,0 +1,12 @@
+/auto-save-list
+/elpa
+/el-get
+/eln-cache
+/.extension
+/.cache
+/transient
+/.lsp-session-*
+/ielm-history.eld
+/tramp
+/places
+/private/yasnippets/*/.yas-compiled-snippets.el

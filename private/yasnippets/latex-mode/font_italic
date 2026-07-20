@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: font_italic
+# key: fi
+# --
+\textit{$1}$0

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# key: sd
+# name: section_sub
+# --
+\subsection{${1:subsection title}}
+$0

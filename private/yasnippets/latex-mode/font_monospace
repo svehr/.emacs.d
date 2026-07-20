@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: font_monospace
+# key: fm
+# --
+\texttt{$1}$0

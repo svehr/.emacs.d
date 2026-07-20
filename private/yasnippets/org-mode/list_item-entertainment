@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: list_item-entertainment
+# key: *e
+# --
+  * type:     $1
+    length:   $2
+    tags:     $3
+    title:    $4
+    creator:  $5
+    lang:     $6
+    note:     $7
+    state:    $8
+$0

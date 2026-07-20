@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: implies_math
+# key: im
+# --
+$\implies$$0

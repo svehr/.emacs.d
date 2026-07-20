@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: list_item-job
+# key: *j
+# --
+  * company:   $1
+    location:  $2
+    job:       $3
+    link:      $4
+    tags:      $5
+    note:      $6
+$0

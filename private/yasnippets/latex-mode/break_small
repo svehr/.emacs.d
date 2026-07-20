@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: break_small
+# key: bs
+# --
+\smallbreak{}
+$0

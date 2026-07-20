@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: break_big
+# key: bb
+# --
+\bigbreak{}
+$0

@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: list_item-tool
+# key: *t
+# --
+  * tags:   $1
+    name:   $2
+    link:   $3
+    note:   $4
+$0

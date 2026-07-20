@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: block-definition
+# key: <bd
+# --
+#+BEGIN_definition $1
+$0
+#+END_definition

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: highlight
+# key: hl
+# --
+\hl{$1}$0

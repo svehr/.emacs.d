@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: list_item-entertainment-movie-amazon
+# key: *ema
+# --
+  * type:     ${1:movie}
+    length:   $2
+    tags:     ${3:prime}
+    title:    $4
+    creator:  $5
+    lang:     $6
+    note:     $7
+    state:    $8
+$0

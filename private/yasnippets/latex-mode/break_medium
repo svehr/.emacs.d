@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: break_medium
+# key: bm
+# --
+\medbreak{}
+$0

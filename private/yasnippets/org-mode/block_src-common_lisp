@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: block_src-common_lisp
+# key: <scl
+# --
+#+BEGIN_SRC common-lisp
+$0
+#+END_SRC

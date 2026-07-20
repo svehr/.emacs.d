@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# key: sf
+# name: section_subsub
+# --
+\subsubsection{${1:subsubsection title}}
+$0

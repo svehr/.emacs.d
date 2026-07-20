@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# key: ch
+# name: chapter
+# type: command
+# expand-env: ((yas-triggers-in-field t))
+# --
+(delete-blank-lines)
+(insert "\n\n\n\n")
+(insert "ch_")
+(save-excursion
+  (insert "\n\n\n"))
+(yas-expand)
