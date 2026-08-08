@@ -62,19 +62,17 @@ NOTE: destructive"
                * `pos' < (`length' `string')
 (`substring' `string' `pos') may be empty
 NOTE: destructive"
-  (if (>= pos (length string))
-      (progn
-        (setf (my/trie/value node) value)
-        (setf (my/trie/string node) string))
-    (let* ((c (aref string pos))
-           (next (+ 1 pos))
-           (cnode (my/trie/find-char c node)))
-      (if cnode
-          (my/trie/insert:suffix cnode value string next)
-        (let ((cnode (if (>= next (length string))
-                         (my/trie/node c string value nil)
-                       (my/trie/internal-path:make value string pos))))
-          (set-char-table-range (my/trie/char-table node) c cnode)))))
+  (pcase-let ((`(,nearest-node . ,nearest-pos)
+               (my/trie/search-nearest-ancestor:suffix node string pos)))
+    (if (>= nearest-pos (length string))
+        ;; the node exists already
+        (progn
+          (setf (my/trie/value nearest-node) value)
+          (setf (my/trie/string nearest-node) string))
+      ;; add the remaining path to the trie
+      (let ((c (aref string nearest-pos))
+            (cnode (my/trie/internal-path:make value string nearest-pos)))
+        (set-char-table-range (my/trie/char-table nearest-node) c cnode))))
   node)
 
 (defmacro my/trie/search (root-node string)
@@ -94,14 +92,10 @@ NOTE: destructive"
 IF   `string' is found in trie starting at `node' then return (`my/trie/value' `node').
 ELSE return nil.
 NOTE: destructive"
-  (if (>= pos (length string))
-      (when (my/trie/string node)
-        (my/trie/value node))
-    (let* ((c (aref string pos))
-           (next (+ 1 pos))
-           (cnode (my/trie/find-char c node)))
-      (when cnode
-        (my/trie/search:suffix cnode string next)))))
+  (pcase-let ((`(,nearest-node . ,nearest-pos)
+                 (my/trie/search-nearest-ancestor:suffix node string pos)))
+      (when (>= nearest-pos (length string))
+        (my/trie/value nearest-node))))
 
 (defun my/trie/search-nearest-ancestor:suffix (node string pos)
   "PRECONDITIONS:
@@ -112,19 +106,18 @@ NOTE: destructive"
                  * empty string is in root node; if it is there
                * `pos' < (`length' `string')
 (`substring' `string' `pos') may be empty
-Search for nearest ancestor of `string' in `node' and return it.
+Search for nearest ancestor of `string' in `node' and return (`nearest-node' . `nearest-pos')
 Since trie is non-empty and `string' is non-empty we always return
-a node (and never nil).
-TODO: use in `my/trie/search:suffix'
-TODO: use in `my/trie/insert:suffix'
+a `nearest-node' (and never nil).
 NOTE: destructive"
-  (let* ((c (aref string pos))
-         (next (+ 1 pos))
-         (cnode (my/trie/find-char c node)))
-    (if cnode
-        (my/trie/search:nearest-ancestor cnode string next)
-      node)))
-
+  (if (>= pos (length string))
+      (cons node pos)
+    (let* ((c (aref string pos))
+           (next (+ 1 pos))
+           (cnode (my/trie/find-char c node)))
+      (if cnode
+          (my/trie/search-nearest-ancestor:suffix cnode string next)
+        (cons node pos)))))
 
 (defun my/trie/listify-char-table (char-table)
   ;; adapted from https://www.gnu.org/software/emacs/manual/html_node/elisp/Char_002dTables.html
