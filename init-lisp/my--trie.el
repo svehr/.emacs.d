@@ -149,44 +149,116 @@ NOTE: destructive"
           :char-table (my/trie/listify-char-table (my/trie/char-table node)))))
 
 (defun my/trie/test ()
-  (list
-   (cons
-    (message "my/trie/test path '%s'" "a")
-    (my/trie/listify (my/trie/internal-path:make "A" "a" 0)))
-   (cons
-    (message "my/trie/test path '%s'" "abc")
-    (my/trie/listify (my/trie/internal-path:make "ABC" "abc" 0)))
-   (cons
-    (message "my/trie/test init '%s'" "")
-    (my/trie/listify (my/trie/init-with-first-string nil "")))
-   (cons
-    (message "my/trie/test init '%s'" "abc")
-    (my/trie/listify (my/trie/init-with-first-string "ABC" "abc")))))
+  (progn
+    (cl-assert
+     (equal
+      (my/trie/listify (my/trie/internal-path:make "A" "a" 0))
+      '(:char "a" :string "a" :value "A" :char-table nil)))
+    (cl-assert
+     (equal
+      (my/trie/listify (my/trie/internal-path:make "ABC" "abc" 0))
+      '(:char "a" :string nil :value nil :char-table
+              (("b"
+                (:char "b" :string nil :value nil :char-table
+                       (("c"
+                         (:char "c" :string "abc" :value "ABC" :char-table
+                                nil)))))))))
+    (cl-assert
+     (equal
+      (my/trie/listify (my/trie/init-with-first-string nil ""))
+      '(:char nil :string "" :value nil :char-table nil)))
+    (cl-assert
+     (equal
+      (my/trie/listify (my/trie/init-with-first-string "ABC" "abc"))
+      '(:char nil :string nil :value nil :char-table
+              (("a"
+                (:char "a" :string nil :value nil :char-table
+                       (("b"
+                         (:char "b" :string nil :value nil :char-table
+                                (("c"
+                                  (:char "c" :string "abc" :value "ABC"
+                                         :char-table nil))))))))))))))
 
 (defun my/trie/test2 ()
-  (list
-    (format "my/trie/test init '%s'" "abc")
-    (let ((root (my/trie/init-with-first-string "ABC" "abc")))
-      (list
-            (message "root = %S" (my/trie/listify root))
-            (cons
-             (message "my/trie/test insert-at-root '%s'" "d")
-             (my/trie/listify (my/trie/insert root "D" "d" )))
-            (cons
-             (message "my/trie/test insert-at-root '%s'" "abcdefg")
-             (my/trie/listify (my/trie/insert root "ABCDEFG" "abcdefg")))
-            (cons
-             (message "my/trie/test insert-at-root '%s'" "ab")
-             (my/trie/listify (my/trie/insert root "AB" "ab")))
-            (cons
-             (message "my/trie/search root '%s'" "d")
-             (my/trie/search root "d"))
-            (cons
-             (message "my/trie/search root '%s'" "abcdefg")
-             (my/trie/search root "abcdefg"))
-            (cons
-             (message "my/trie/search root '%s'" "FAIL")
-             (my/trie/search root "FAIL"))
-            ))))
+  (let ((root (my/trie/init-with-first-string "ABC" "abc")))
+    (progn
+      (cl-assert
+       (equal (my/trie/listify (my/trie/insert root "D" "d" ))
+              '(:char nil :string nil :value nil
+                      :char-table
+                      (("d" (:char "d" :string "d" :value "D" :char-table nil))
+                       ("a"
+                        (:char "a" :string nil :value nil :char-table
+                               (("b"
+                                 (:char "b" :string nil :value nil :char-table
+                                        (("c"
+                                          (:char "c" :string "abc" :value "ABC"
+                                                 :char-table nil))))))))))))
+      (cl-assert
+       (equal (my/trie/listify (my/trie/insert root "ABCDEFG" "abcdefg"))
+              '(:char nil :string nil :value nil
+                      :char-table
+                      (("d" (:char "d" :string "d" :value "D" :char-table nil))
+                       ("a"
+                        (:char "a" :string nil :value nil :char-table
+                               (("b"
+                                 (:char "b" :string nil :value nil :char-table
+                                        (("c"
+                                          (:char "c" :string "abc" :value "ABC"
+                                                 :char-table
+                                                 (("d"
+                                                   (:char "d" :string nil :value nil
+                                                          :char-table
+                                                          (("e"
+                                                            (:char "e" :string nil :value
+                                                                   nil :char-table
+                                                                   (("f"
+                                                                     (:char "f" :string
+                                                                            nil :value
+                                                                            nil
+                                                                            :char-table
+                                                                            (("g"
+                                                                              (:char "g"
+                                                                                     :string
+                                                                                     "abcdefg"
+                                                                                     :value
+                                                                                     "ABCDEFG"
+                                                                                     :char-table
+                                                                                     nil))))))))))))))))))))))))
+      (cl-assert
+       (equal (my/trie/listify (my/trie/insert root "AB" "ab"))
+              '(:char nil :string nil :value nil
+                      :char-table
+                      (("d" (:char "d" :string "d" :value "D" :char-table nil))
+                       ("a"
+                        (:char "a" :string nil :value nil :char-table
+                               (("b"
+                                 (:char "b" :string "ab" :value "AB" :char-table
+                                        (("c"
+                                          (:char "c" :string "abc" :value "ABC"
+                                                 :char-table
+                                                 (("d"
+                                                   (:char "d" :string nil :value nil
+                                                          :char-table
+                                                          (("e"
+                                                            (:char "e" :string nil :value
+                                                                   nil :char-table
+                                                                   (("f"
+                                                                     (:char "f" :string
+                                                                            nil :value
+                                                                            nil
+                                                                            :char-table
+                                                                            (("g"
+                                                                              (:char "g"
+                                                                                     :string
+                                                                                     "abcdefg"
+                                                                                     :value
+                                                                                     "ABCDEFG"
+                                                                                     :char-table
+                                                                                     nil))))))))))))))))))))))))
+      (cl-assert (string-equal (my/trie/search root "d") "D"))
+      (cl-assert (string-equal (my/trie/search root "d") "D"))
+      (cl-assert (string-equal (my/trie/search root "abcdefg") "ABCDEFG"))
+      (cl-assert (string-equal (my/trie/search root "abc") "ABC")))))
 
 (provide 'my--trie)
