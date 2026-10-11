@@ -3075,7 +3075,7 @@ Only prompt if current buffer is modified."
 
 (progn
   ;; external browser
-  (my/defvar my/next-browser-exe "~/next.sh"
+  (my/defvar my/next-browser-exe "~/next.sh"  ;; TODO: now called nyxt
              "path to 'next' browser executable / script")
   (my/customize '(browse-url-firefox-program "firefox"))
   (defun my/browse-url-next (url)
