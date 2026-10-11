@@ -3077,6 +3077,7 @@ Only prompt if current buffer is modified."
   ;; external browser
   (my/defvar my/next-browser-exe "~/next.sh"
              "path to 'next' browser executable / script")
+  (my/customize '(browse-url-firefox-program "firefox"))
   (defun my/browse-url-next (url)
     (start-process (format "next %s" url) nil my/next-browser-exe url))
 
